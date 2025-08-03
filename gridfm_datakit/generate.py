@@ -43,6 +43,7 @@ from gridfm_datakit.utils.utils import write_ram_usage_distributed, Tee
 import yaml
 from typing import List, Tuple, Any, Dict, Optional, Union
 import sys
+import pandapower as pp
 
 
 def _setup_environment(
@@ -127,17 +128,18 @@ def _prepare_network_and_scenarios(
     Returns:
         Tuple of (network, scenarios)
     """
+    net = pp.from_json(args.network.path)
     # Load network
-    if args.network.source == "pandapower":
-        net = load_net_from_pp(args.network.name)
-    elif args.network.source == "pglib":
-        net = load_net_from_pglib(args.network.name)
-    elif args.network.source == "file":
-        net = load_net_from_file(
-            os.path.join(args.network.network_dir, args.network.name) + ".m",
-        )
-    else:
-        raise ValueError("Invalid grid source!")
+    # if args.network.source == "pandapower":
+    #     net = load_net_from_pp(args.network.name)
+    # elif args.network.source == "pglib":
+    #     net = load_net_from_pglib(args.network.name)
+    # elif args.network.source == "file":
+    #     net = load_net_from_file(
+    #         os.path.join(args.network.network_dir, args.network.name) + ".m",
+    #     )
+    # else:
+    #     raise ValueError("Invalid grid source!")
 
     network_preprocessing(net)
     assert (net.sgen["scaling"] == 1).all(), "Scaling factor >1 not supported yet!"

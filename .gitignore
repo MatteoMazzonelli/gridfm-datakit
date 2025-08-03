@@ -14,3 +14,6 @@ notebooks/test_data
 tests/test_data
 tests/test_data_contingency
 build/
+Swiss-PDGs-v1.0/
+Swiss-PDGs-v1.0.zip
+*.json
